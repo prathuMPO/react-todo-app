@@ -1,0 +1,145 @@
+/** @format */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #121212; /* near-black, neutral — the page */
+  --surface: #1e1e1e; /* slightly lighter grey — cards/inputs sit "on" the page */
+  --text: #e0e0e0; /* soft white — easy on eyes (not harsh #fff) */
+  --text-dim: #888888; /* dimmer grey — for less-important text like the count */
+  --accent: #10b981; /* your green — the ONLY color, used sparingly */
+  --border: #333333;
+}
+[data-theme="light"] {
+  --bg: #f5f5f5; /* light grey page */
+  --surface: #ffffff; /* white cards */
+  --text: #1a1a1a; /* dark text */
+  --text-dim: #666666; /* dimmer dark grey */
+  --accent: #10b981; /* green can stay the same — it works on both */
+  --border: #dddddd;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(1, 51, 27, 0.3);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.container h1 {
+  color: var(--text);
+  text-align: center;
+  font-size: 35px;
+}
+
+input {
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  padding: 12px 16px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.search_button {
+  background-color: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.theme-btn {
+  background-color: var(--bg);
+  color: var(--text);
+  border: none;
+  margin-left: 225px;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.theme-btn:hover {
+  background-color: #2b3a35;
+  color: #0d9668;
+}
+
+.search_button:hover {
+  background-color: #0d9668; /* a slightly darker green */
+  /* or use: opacity: 0.9; for a simple dimming effect */
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  justify-content: space-between;
+  background-color: var(--bg);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.task-item.done {
+  opacity: 0.5; /* faded — recedes */
+  text-decoration: line-through;
+}
+
+.dlt_btn {
+  background-color: transparent; /* no fill — understated */
+  color: var(--text-dim); /* dim grey, recedes */
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+.dlt_btn:hover {
+  color: #ef4444; /* red on hover — signals "destructive" */
+  border-color: #ef4444;
+}
+
+.total-task {
+  margin-top: 20px;
+  color: var(--text-dim);
+}
