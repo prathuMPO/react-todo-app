@@ -25,3 +25,5 @@ cd react-todo-app
 npm install
 npm run dev
 ```
+
+![To-Do App Preview](ss/image.png)
