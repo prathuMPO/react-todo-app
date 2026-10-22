@@ -26,4 +26,4 @@ npm install
 npm run dev
 ```
 
-![To-Do App Preview](ss/image.png)
+![To-Do App Preview](image.png)
