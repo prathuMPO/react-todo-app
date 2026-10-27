@@ -1,6 +1,7 @@
 /** @format */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import "./App.css";
 
 function App() {
@@ -8,6 +9,55 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState("");
   const [theme, setTheme] = useState("dark");
+
+  useEffect(() => {
+    fetch("http://localhost:3000/tasks")
+      .then((res) => res.json())
+      .then((data) => setTasks(data));
+  }, []);
+
+  const addTask = () => {
+    if (task.trim() === "") {
+      setError("Please enter a task");
+      return;
+    }
+
+    fetch("http://localhost:3000/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        taskText: () => {
+          if (taskText.trim() == "") {
+            setError("Please enter a task");
+            return;
+          }
+        },
+      }),
+    })
+      .then((res) => res.json())
+      .then((savedTask) => {
+        setTasks([...tasks, savedTask]);
+        setTask("");
+      });
+  };
+
+  const deleteTask = (id) => {
+    fetch(`http://localhost:3000/tasks/${id}`, {
+      method: "DELETE",
+    }).then(() => {
+      setTasks(tasks.filter((task) => task._id !== id));
+    });
+  };
+
+  const toggleTask = (id) => {
+    fetch(`http://localhost:3000/tasks/${id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((updatedTask) => {
+        setTasks(tasks.map((t) => (t._id === id ? updatedTask : t)));
+      });
+  };
 
   return (
     <div className="container" data-theme={theme}>
@@ -24,25 +74,7 @@ function App() {
         onChange={(e) => setTask(e.target.value)}
         placeholder={error}
       />
-      <button
-        className="search_button"
-        onClick={() => {
-          if (task.trim() === "") {
-            setError("Please enter a task");
-            return;
-          }
-
-          setTasks([
-            ...tasks,
-            {
-              taskText: task.trim(),
-              isDone: false,
-            },
-          ]);
-          setTask("");
-          setError("");
-        }}
-      >
+      <button className="search_button" onClick={addTask}>
         Add your task here:
       </button>
       <ul className="task-list">
@@ -52,25 +84,8 @@ function App() {
             key={index}
             // style={{ textDecoration: t.isDone ? "line-through" : "none" }}
           >
-            <span
-              onClick={() =>
-                setTasks(
-                  tasks.map((t, i) => {
-                    if (i == index) {
-                      return { ...t, isDone: !t.isDone };
-                    } else {
-                      return t;
-                    }
-                  }),
-                )
-              }
-            >
-              {t.taskText}
-            </span>
-            <button
-              className="dlt_btn"
-              onClick={() => setTasks(tasks.filter((t, i) => i !== index))}
-            >
+            <span onClick={() => toggleTask(t._id)}>{t.taskText}</span>
+            <button className="dlt_btn" onClick={() => deleteTask(t._id)}>
               Delete
             </button>
           </li>
